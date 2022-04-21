@@ -7,6 +7,7 @@ module.exports = function(deployer) {
     //argument for the smart contract's constructor
     deployer.deploy(Warranty,
         1648551148,      //uint _warrantyExpirationDate, //date in seconds past epoch
+        true, //_warrantyExpires
         3,        //uint _numberOfDaysToCorrect,
         1648501148,        //uint _workCompleted, //date in seconds past epoch
         "Test",        //string memory _projectName,
@@ -14,7 +15,7 @@ module.exports = function(deployer) {
         true,       //bool _transferable
         {
             name: "The Stine Family", 
-            partyAddress: addressPlaceHolder.ADDRESS,
+            partyAddress: addressPlaceHolder.PROVIDER_ADDRESS,
             physicalLocation: {
                 streetAddressLine1:'123 Fake Street',
             streetAddressLine2:'',
@@ -31,7 +32,7 @@ module.exports = function(deployer) {
         },      //Party memory _warrantyProvider,
         {
             name: "The Stine Contracting Co.", 
-            partyAddress: addressPlaceHolder.ADDRESS,
+            partyAddress: addressPlaceHolder.HOLDER_ADDRESS,
             physicalLocation: {
                 streetAddressLine1:'123 Fake Street',
             streetAddressLine2:'',

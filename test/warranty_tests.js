@@ -11,11 +11,17 @@ const Warranty = artifacts.require("BaseWarrantySmartContract");
 contract("BaseWarrantySmartContract", 
   function (accounts) 
   {
-    let warranty;
+    let warranty;// = Warranty.deployed();
     const assert = require('chai').assert;
 
     beforeEach(async () => {
-      warranty = await Warranty.deployed();
+      //use this to get the deployed warranty and run tests without changing it
+      warranty = Warranty.deployed();
+      /*
+      use this to get the deployed warranty via the address the contract is deploted to
+      to run tests that do change the state of the deployed version
+      warranty = await Warranty.at(CONTRACT_ADDRESS);
+      */
     });
 /* 
     it("should assert true", async function () {
@@ -73,8 +79,8 @@ contract("BaseWarrantySmartContract",
           console.log(addressPlaceHolder);
           const oldHolder = await warranty.warrantyHolder();
           await warranty.transferWarrantyToAnotherParty({
-            name: "The Stein Contracting Co.", 
-            partyAddress: addressPlaceHolder.ADDRESS,
+            name: "The New Contracting Co.", 
+            partyAddress: addressPlaceHolder.PROVIDER_ADDRESS,
             physicalLocation: {
                 streetAddressLine1:'123 Fake Street',
             streetAddressLine2:'',
@@ -91,9 +97,10 @@ contract("BaseWarrantySmartContract",
           });
           const newHolder = await warranty.warrantyHolder();
           const previousHolders = await warranty.getPreviousHolders();
-          console.log(`old: ${JSON.stringify(oldHolder)}`);
-          console.log(`new: ${JSON.stringify(newHolder)}`);
-          console.log(`previous holders: ${previousHolders}`);
+          console.log(`old: ${oldHolder.name}`);
+          console.log(`new: ${newHolder.name}`);
+          console.log(`previous holders: `);
+          previousHolders.forEach((holder, i) => console.log(`${i} ${holder.name}`))
           //assert.isNumber(dateOfExpir, "returned dateOfExpir");
           assert.notEqual(oldHolder.name, newHolder.name, `names should be different`)
           assert.equal(previousHolders.length, 1, 'previous holders should have one in it');

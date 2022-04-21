@@ -25,11 +25,13 @@ const App = () =>{
                         <Menu mode="vertical">
                             <Menu.Item key="warranty">
                                 <Link to="/warranty">
+                                    <img src="writing-sign.svg" className="menuIcon" alt=""></img>
                                     Make A Warranty
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="about">
                                 <Link to="/about">
+                                    <img src="info-circle.svg" className="menuIcon" alt=""></img>
                                     About
                                 </Link>
                             </Menu.Item>

@@ -6,9 +6,11 @@ import HolderForm from "./Forms/HolderForm";
 import ProviderForm from "./Forms/ProviderForm"
 import WarrantyDetailsForm from "./Forms/WarrantyDetailsForm";
 import { useStepsForm } from 'sunflower-antd';
+import { deployWarranty } from "../../eth/warrantyDeploy";
 
 const WarrantyScreen = () => {
     const { Step } = Steps;
+    const [address, setAddress] = useState(null)
     const {
         form,
         current,
@@ -20,7 +22,13 @@ const WarrantyScreen = () => {
       } = useStepsForm({
         async submit (values) {
           console.log(values);
-          await new Promise(r => setTimeout(r, 1000));
+          let arr = [];
+          Object.keys(values).forEach(key => {
+            let value = values[key];
+            arr.push(value);
+          });
+          await deployWarranty(arr)
+          //await new Promise(r => setTimeout(r, 1000));
           return 'ok';
         },
         defaultCurrent:0, 
@@ -38,7 +46,7 @@ const WarrantyScreen = () => {
         <WarrantyDetailsForm form={form}/>,
         <div>
             Complete!
-            See your contract at {'<address>'}
+            See your contract at {address}
         </div>
     ]
     
@@ -50,6 +58,16 @@ const WarrantyScreen = () => {
         gotoStep(current - 1)
         window.scroll({top:0,behavior:'smooth'})
     };
+
+    const submitWarranty = async function(){
+        submit().then(result => {
+            if (result === 'ok') {
+                message.success('Processing complete!');
+
+              gotoStep(current + 1);
+            }
+          });
+    }
 
     return (
         <div>  
@@ -85,15 +103,7 @@ const WarrantyScreen = () => {
                         {current === 2  && (
                             <Button 
                                 type="primary" 
-                                onClick={() => {
-                                    submit().then(result => {
-                                      message.success('Processing complete!');
-                                      if (result === 'ok') {
-
-                                        gotoStep(current + 1);
-                                      }
-                                    });
-                                  }}
+                                onClick={() => submitWarranty()}
                             >
                                 Finish
                             </Button>

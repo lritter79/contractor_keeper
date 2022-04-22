@@ -29,3 +29,7 @@
 .menuIcon{
   vertical-align: middle;
 }
+
+.ant-steps {
+  padding: 5px;
+}

@@ -47,18 +47,24 @@ const App = () =>{
                     <Layout>     
                         <Content style={{ padding: '0 50px', height:'100%' }}>
                             <Routes>
-                                <Route path="/" element={<Carousel/>}>
+                                <Route exact path="/" element={<Carousel/>}>
                                 </Route>   
                                 
-                                <Route path="/warranty" element={<WarrantyScreen/>}>
+                                <Route exact path="/warranty" element={<WarrantyScreen/>}>
                                 </Route>
      
-                                <Route path="/about" element={<About/>}>
+                                <Route exact path="/about" element={<About/>}>
                                 </Route>
 
-                                <Route path="/faq" element={<Faq/>}>
+                                <Route exact path="/faq" element={<Faq/>}>
                                 </Route>
-                            </Routes>
+
+                                <Route path="*" element={
+                                    <div>
+                                        <h3>404 - Not Found!</h3>
+                                        <Link to="/">Go Home</Link>
+                                    </div>} />
+                                </Routes>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>
                             Made With <span style={{color: 'rgb(255, 255, 255)'}}>❤</span> By Levon Ritter

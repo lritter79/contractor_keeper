@@ -12,7 +12,13 @@ const Carousel = () => {
         background: '#364d79',
     };
     return ( 
-  <AntdCarousel autoplay='true'>
+  <AntdCarousel>
+    <div>
+      <h3 style={contentStyle}>Welcome to Contractor Keeper</h3>
+    </div>
+    <div>
+      <h3 style={contentStyle}>We put your home's history on the blockchain</h3>
+    </div>
     <div>
       <h3 style={contentStyle}>For Contractors</h3>
     </div>

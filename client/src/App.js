@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import WarrantyScreen from "./routes/WarrantyScreen/WarrantyScreen";
 import About from "./routes/About";
 import Carousel from "./components/Carousel";
+import Faq from "./routes/Faq";
 const { Header, Content, Footer, Sider } = Layout;
 
 const App = () =>{
@@ -35,6 +36,12 @@ const App = () =>{
                                     About
                                 </Link>
                             </Menu.Item>
+                            <Menu.Item key="faq">
+                                <Link to="/faq">
+                                    <img src="question-mark.svg" className="menuIcon" alt="" />
+                                    FAQ
+                                </Link>
+                            </Menu.Item>
                         </Menu>
                     </Sider>                   
                     <Layout>     
@@ -49,6 +56,8 @@ const App = () =>{
                                 <Route path="/about" element={<About/>}>
                                 </Route>
 
+                                <Route path="/faq" element={<Faq/>}>
+                                </Route>
                             </Routes>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>

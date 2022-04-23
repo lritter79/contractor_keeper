@@ -10,7 +10,7 @@ import { deployWarranty } from "../../eth/warrantyDeploy";
 import useLocalStorage from "../../customHooks/useLocalStorage";
 
 
-const WarrantyScreen = () => {
+const WarrantyForm = () => {
     const { Step } = Steps;
     const addressPlaceHolder = Object.freeze({
         HOLDER_ADDRESS: '0x630aB4E818Bd0c1ADAF690aDC3703A49D6D7f07E',
@@ -50,7 +50,7 @@ const WarrantyScreen = () => {
         <WarrantyDetailsForm form={form}/>,
         <div>
             Complete!
-            See your contract at {address}
+            See your contract at <a href={`https://etherscan.io/address/${address}`}>{address}</a>
         </div>
     ]
 
@@ -188,4 +188,4 @@ const WarrantyScreen = () => {
     );
 }
  
-export default WarrantyScreen;
+export default WarrantyForm;

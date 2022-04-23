@@ -3,13 +3,17 @@ import { Layout, Menu } from 'antd';
 import Title from "antd/lib/typography/Title";
 import './App.css'
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-import WarrantyScreen from "./routes/WarrantyScreen/WarrantyScreen";
+import WarrantyForm from "./routes/WarrantyForm/WarrantyForm";
 import About from "./routes/About";
 import Carousel from "./components/Carousel";
 import Faq from "./routes/Faq";
+import WarrantyView from "./routes/WarrantyView/WarrantyView";
+import useLocalStorage from "../src/customHooks/useLocalStorage";
 const { Header, Content, Footer, Sider } = Layout;
 
 const App = () =>{
+    const [address, setAddress] = useLocalStorage("contractAddress", null)
+
     return (
         <Router>
             <Layout style={{minHeight:'100vh'}}>        
@@ -30,6 +34,13 @@ const App = () =>{
                                     Make A Warranty
                                 </Link>
                             </Menu.Item>
+                            {address &&
+                            <Menu.Item key="view">
+                                <Link to={`/warranty/${address}`}>
+                                    <img src="writing-sign.svg" className="menuIcon" alt=""></img>
+                                    View Your Warranty
+                                </Link>
+                            </Menu.Item>}
                             <Menu.Item key="about">
                                 <Link to="/about">
                                     <img src="info-circle.svg" className="menuIcon" alt=""></img>
@@ -50,8 +61,11 @@ const App = () =>{
                                 <Route exact path="/" element={<Carousel/>}>
                                 </Route>   
                                 
-                                <Route exact path="/warranty" element={<WarrantyScreen/>}>
+                                <Route exact path="/warranty" element={<WarrantyForm/>}>
                                 </Route>
+
+                                <Route exact path="/warranty/:address" element={<WarrantyView />}></Route>
+
      
                                 <Route exact path="/about" element={<About/>}>
                                 </Route>

@@ -55,18 +55,20 @@ const WarrantyScreen = () => {
     ]
 
     function shapeData(formOutput) {
-        /* let params = [];
-        params.push(formOutput.expirationDate.unix());// uint _warrantyExpirationDate, //date in seconds past epoch
-        params.push(formOutput.warrantyExpires);// bool _warrantyExpires,
-        params.push(formOutput.daysToCorrect);// uint _numberOfDaysToCorrect,
-        params.push(formOutput.dateOfWorkCompletion.unix());// uint _workCompleted, //date in seconds past epoch
-        params.push(formOutput.projectName);// string memory _projectName,
-        params.push(formOutput.descriptionOfProject);// string memory _description,
-        params.push(formOutput.isTransferable);// bool _transferable,
-        params.push(formOutput.provider);// Party memory _warrantyProvider,
-        params.push(formOutput.holder);// Party memory _warrantyHolder,
-        params.push(formOutput.useHolderAddress ? formOutput.holder.location : formOutput.location);// Location memory _location */
-        let params =[
+        let params = [
+            formOutput.expirationDate.unix(),
+            formOutput.warrantyExpires,
+            formOutput.daysToCorrect,
+            formOutput.dateOfWorkCompletion.unix(),
+            formOutput.projectName,
+            formOutput.descriptionOfProject,
+            formOutput.isTransferable,
+            formOutput.provider,
+            formOutput.holder,
+            formOutput.useHolderAddress ? formOutput.holder.physicalLocation : formOutput.location
+        ];
+
+        let params2 =[
             1648551148,      //uint _warrantyExpirationDate, //date in seconds past epoch
             true, //_warrantyExpires
             3,        //uint _numberOfDaysToCorrect,
@@ -116,6 +118,8 @@ const WarrantyScreen = () => {
                 postalCode: "77777"
             },        //Location memory _location
         ]
+        console.log(params);
+        console.log(params2);
         return params;
     }
     

@@ -6,18 +6,18 @@ const HolderForm = ({form}) => {
         form.setFieldsValue({
             holder: {
                 name: 'Suzy and Bob Weiss', 
-                walletAddress: '0x0',
-                location:{
-                    addressLine1:"123 Fake Street",
-                    addressLine2: null,
+                partyAddress: '0x0000000000000000000000000000000000000000',
+                physicalLocation:{
+                    streetAddressLine1:"123 Fake Street",
+                    streetAddressLine2: '',
                     city: "Rittsburgh",
                     state: "PA",
-                    zip:'69420',
+                    postalCode:'69420',
                 },
-                contactInformation: {
+                contactInfo: {
                     email:'fake@notreal.com',
-                    mobilePhone: '2022002000',
-                    workPhone:null
+                    phoneMobile: '2022002000',
+                    phoneHome:''
                 }
             },
         });
@@ -36,31 +36,31 @@ const HolderForm = ({form}) => {
                 >
                     <Input placeholder="" />
                 </AntdForm.Item>
-                <AntdForm.Item label="Holder Wallet Address" name={['holder','walletAddress']}>
+                <AntdForm.Item label="Holder Wallet Address" name={['holder','partyAddress']}>
                     <Input placeholder="" />
                 </AntdForm.Item>
-                <AntdForm.Item label="Holder Street Address Line 1" name={['holder','location','addressLine1']}>
+                <AntdForm.Item label="Holder Street Address Line 1" name={['holder','physicalLocation','streetAddressLine1']}>
                     <Input placeholder="" />
                 </AntdForm.Item>  
-                <AntdForm.Item label="Holder Street Address Line 2" name={['holder','location','addressLine2']}>
+                <AntdForm.Item label="Holder Street Address Line 2" name={['holder','physicalLocation','streetAddressLine2']}>
                     <Input placeholder="" />
                 </AntdForm.Item> 
-                <AntdForm.Item label="Holder City" name={['holder','location','city']}>
+                <AntdForm.Item label="Holder City" name={['holder','physicalLocation','city']}>
                     <Input placeholder="" />
                 </AntdForm.Item>       
-                <AntdForm.Item label="Holder State" name={['holder','location','state']}>
+                <AntdForm.Item label="Holder State" name={['holder','physicalLocation','state']}>
                     <Input placeholder="" />
                 </AntdForm.Item>      
-                <AntdForm.Item label="Holder ZIP Code" name={['holder','location','zip']}>
+                <AntdForm.Item label="Holder ZIP Code" name={['holder','physicalLocation','postalCode']}>
                     <Input placeholder="" />
                 </AntdForm.Item>        
-                <AntdForm.Item label="Holder Email" name={['holder','contactInformation','email']}>
+                <AntdForm.Item label="Holder Email" name={['holder','contactInfo','email']}>
                     <Input placeholder="" />
                 </AntdForm.Item>
-                <AntdForm.Item label="Holder Phone - Mobile" name={['holder','contactInformation','mobilePhone']}>
+                <AntdForm.Item label="Holder Phone - Mobile" name={['holder','contactInfo','phoneMobile']}>
                     <Input placeholder="" />
                 </AntdForm.Item>
-                <AntdForm.Item label="Holder Phone - Home" name={['holder','contactInformation','workPhone']}>
+                <AntdForm.Item label="Holder Phone - Home" name={['holder','contactInfo','phoneHome']}>
                     <Input placeholder="" />
                 </AntdForm.Item>
 

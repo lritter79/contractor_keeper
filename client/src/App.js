@@ -37,7 +37,7 @@ const App = () =>{
                             {address &&
                             <Menu.Item key="view">
                                 <Link to={`/warranty/${address}`}>
-                                    <img src="writing-sign.svg" className="menuIcon" alt=""></img>
+                                    <img src="file.svg" className="menuIcon" alt=""></img>
                                     View Your Warranty
                                 </Link>
                             </Menu.Item>}

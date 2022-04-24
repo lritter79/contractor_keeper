@@ -16,7 +16,7 @@ contract("BaseWarrantySmartContract",
 
     beforeEach(async () => {
       //use this to get the deployed warranty and run tests without changing it
-      warranty = Warranty.deployed();
+      warranty = await Warranty.deployed();
       /*
       use this to get the deployed warranty via the address the contract is deploted to
       to run tests that do change the state of the deployed version
@@ -29,9 +29,14 @@ contract("BaseWarrantySmartContract",
     }); */
 
     describe("get is expired", async function(){
-      it("should return true", async function(){
+      // it("should return true", async function(){
+      //     const isExpired = await warranty.checkIfExpired();
+      //     assert.isTrue(isExpired, "deployed warranty should be expired");
+      // });
+          it("should return false", async function(){
+          console.log(await warranty.warrantyExpires())
           const isExpired = await warranty.checkIfExpired();
-          assert.isTrue(isExpired, "deployed warranty should be expired");
+          assert.isFalse(isExpired, "deployed warranty shouldnt be expired");
       });
     }); 
 

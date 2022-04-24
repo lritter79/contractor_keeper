@@ -7,7 +7,7 @@ module.exports = function(deployer) {
     //argument for the smart contract's constructor
     deployer.deploy(Warranty,
         1648551148,      //uint _warrantyExpirationDate, //date in seconds past epoch
-        true, //_warrantyExpires
+        false, //_warrantyExpires
         3,        //uint _numberOfDaysToCorrect,
         1648501148,        //uint _workCompleted, //date in seconds past epoch
         "Test",        //string memory _projectName,

@@ -71,12 +71,12 @@ contract BaseWarrantySmartContract {
 
     function checkIfExpired() public view returns(bool) {
         uint currentTime = block.timestamp;
-        if (currentTime > warrantyExpirationDate) {
-            return true;
-        } 
-        else {
-            return false;
+        if (warrantyExpires) {
+            if (currentTime > warrantyExpirationDate) {
+                return true;
+            }        
         }
+        return false;
     }
 
     function getDaysUntilExpiration() public view returns(uint) {

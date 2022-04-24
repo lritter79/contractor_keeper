@@ -21,7 +21,9 @@ const WarrantyView = () => {
             setWarranty(res)
             setIsLoading(false)
             console.log(res)
-            await executeWarrantyMethod(res, 'checkIfExpired()').then(res2 => setIsExpired(res2))
+            await executeWarrantyMethod(res, 'checkIfExpired()').then(res2 => setIsExpired(res2))            
+            await executeWarrantyMethod(res, 'warrantyExpirationDate()').then(res2 => console.log(res2))
+
             //res.methods.checkIfExpired()//.cal({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, result){
         }).finally(() => setIsLoading(false))
     }

@@ -20,6 +20,17 @@ const WarrantyDetailsForm = ({form}) => {
         });
         window.scroll({top:1000, behavior:'smooth'})
     };
+
+    const onExpiresToggle = (e) => {
+        if (!e.target.value) {
+            //max date September 13, 275760
+            form.setFieldsValue({expirationDate:moment(new Date(275760, 4, 20))})
+        } else {
+            form.setFieldsValue({expirationDate:moment(new Date())})
+        }
+
+    };
+
     return (  
     <>  
         <AntdForm.Item>                               
@@ -71,7 +82,7 @@ const WarrantyDetailsForm = ({form}) => {
             <DatePicker />
         </AntdForm.Item>
         <AntdForm.Item label="Does This Warranty Expire?" name="warrantyExpires">
-            <Radio.Group>
+            <Radio.Group onChange={e => onExpiresToggle(e)}>
                 <Radio value={true}>Yes</Radio>
                 <Radio value={false}>No</Radio>
             </Radio.Group>

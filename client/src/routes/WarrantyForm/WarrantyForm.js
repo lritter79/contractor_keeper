@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from "react";
 import 'antd/dist/antd.css';
 import ReactDOM from 'react-dom';
-import { Form as AntdForm, Input, Button, Radio, Steps, message } from 'antd';
+import { Form as AntdForm, Input, Button, Radio, Steps, message, Result, Progress, Modal, Spin } from 'antd';
 import HolderForm from "./Forms/HolderForm";
 import ProviderForm from "./Forms/ProviderForm"
 import WarrantyDetailsForm from "./Forms/WarrantyDetailsForm";
@@ -17,7 +17,10 @@ const WarrantyForm = () => {
         PROVIDER_ADDRESS: '0x630aB4E818Bd0c1ADAF690aDC3703A49D6D7f07E',
         TRANSFER_ADDRESS: '0x630aB4E818Bd0c1ADAF690aDC3703A49D6D7f07E'
     });
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const [address, setAddress] = useLocalStorage("contractAddress", null)
+    const statusArr =['success', 'exception', 'active']
+    const [status, setStatus] = useState(2)
     const {
         form,
         current,
@@ -28,6 +31,7 @@ const WarrantyForm = () => {
         formLoading,
       } = useStepsForm({
         async submit (values) {
+        setIsModalVisible(true)
           console.log(values);
           let arr = shapeData(values);
           let address = await deployWarranty(arr)
@@ -49,9 +53,18 @@ const WarrantyForm = () => {
         ,
         <WarrantyDetailsForm form={form}/>,
         <div>
-            Complete!
-            See your contract at <a href={`https://etherscan.io/address/${address}`}>{address}</a>
+            <Result
+                status="success"
+                title="Successfully Created a Smart Warranty"
+                subTitle=""
+                extra={[
+                    <p style={{wordBreak: 'break-all'}}>           
+                        See your contract at <a href={`https://etherscan.io/address/${address}`}>{address}</a>
+                    </p>
+                ]}
+            />
         </div>
+        
     ]
 
     function shapeData(formOutput) {
@@ -119,7 +132,6 @@ const WarrantyForm = () => {
             },        //Location memory _location
         ]
         console.log(params);
-        console.log(params2);
         return params;
     }
     
@@ -132,17 +144,33 @@ const WarrantyForm = () => {
         window.scroll({top:0,behavior:'smooth'})
     };
 
-    const submitWarranty = async function(){
-        submit().then(result => {
+    const submitWarranty = async function() {
+        submit()
+        .then(result => {
             if (result === 'ok') {
                 message.success('Processing complete!');
-
+                setStatus(0)
               gotoStep(current + 1);
             }
-          });
+        })
+        .catch(err => {
+            message.error("Something went wrong");
+            setStatus(1);
+        })
+        .finally(()=> setIsModalVisible(false));
     }
 
     return (
+    <>
+        <Modal
+            title="Saving to blockchain..."
+            visible={isModalVisible}
+            closable='false'
+            footer={null}
+        >
+            <p>Use MetaMask to accept the transaction</p>
+            <Spin />
+        </Modal>
         <div>  
                     
                 <Steps labelPlacement="horizontal" responsive="true" current={current}>
@@ -183,8 +211,12 @@ const WarrantyForm = () => {
                         )}
                     </AntdForm.Item>
                 
-            </AntdForm>      
+            </AntdForm>  
+            <div style={{ width: 170, margin:'0 auto' }}>
+                <Progress percent={(current + 1) * 25} status={statusArr[status]} />
+            </div>    
         </div>
+    </>
     );
 }
  

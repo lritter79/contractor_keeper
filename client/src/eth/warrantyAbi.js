@@ -294,6 +294,19 @@ const warrantyAbi = [
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "_message",
+        "type": "string"
+      }
+    ],
+    "name": "WarrantyVoided",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "dateOfWorkCompletion",
     "outputs": [
@@ -589,6 +602,13 @@ const warrantyAbi = [
   },
   {
     "inputs": [],
+    "name": "voidWarranty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "checkIfExpired",
     "outputs": [
       {
@@ -785,4 +805,5 @@ const warrantyAbi = [
     "type": "function"
   }
 ]
-export default warrantyAbi;
+
+export default warrantyAbi

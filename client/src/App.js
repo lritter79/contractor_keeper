@@ -36,7 +36,7 @@ const App = () =>{
                             </Menu.Item>
                             {address &&
                             <Menu.Item key="view">
-                                <Link to={`/warranty/${address}`}>
+                                <Link to='/view'>
                                     <img src="file.svg" className="menuIcon" alt=""></img>
                                     View Your Warranty
                                 </Link>
@@ -64,7 +64,7 @@ const App = () =>{
                                 <Route exact path="/warranty" element={<WarrantyForm/>}>
                                 </Route>
 
-                                <Route exact path="/warranty/:address" element={<WarrantyView />}></Route>
+                                <Route exact path="/view" element={<WarrantyView />}></Route>
 
      
                                 <Route exact path="/about" element={<About/>}>

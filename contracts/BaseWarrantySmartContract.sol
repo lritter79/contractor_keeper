@@ -43,6 +43,7 @@ contract BaseWarrantySmartContract {
     enum WarrantyState { INACTIVE, ACTIVE, VOID }
     WarrantyState public stateOfWarranty;
     event CurrentHolderChanged(Party _newOwner);
+    event WarrantyVoided(string _message);
 
     constructor(uint _warrantyExpirationDate, //date in seconds past epoch
                 bool _warrantyExpires,
@@ -67,6 +68,19 @@ contract BaseWarrantySmartContract {
         warrantyHolder = _warrantyHolder;
         locationOfWork = _location;
         isTransferable = _transferable;
+    }
+
+    modifier mustBeActive() {
+        require(
+            stateOfWarranty == WarrantyState.ACTIVE,
+            "This function may only be used if the contract is active"
+        );
+        _;
+    }
+
+    function voidWarranty() public mustBeActive {
+        stateOfWarranty = WarrantyState.VOID;
+        emit WarrantyVoided(string(abi.encodePacked("The warranty for the ", projectName, " at ", getLocationAsString(), " has been voided")));
     }
 
     function checkIfExpired() public view returns(bool) {
@@ -101,7 +115,7 @@ contract BaseWarrantySmartContract {
     function getLocationAsString() public view returns (string memory) {
         return string(abi.encodePacked(locationOfWork.streetAddressLine1, " ",
         locationOfWork.streetAddressLine2, " ",
-        locationOfWork.city, " ",
+        locationOfWork.city, ", ",
         locationOfWork.state, " ",
         locationOfWork.postalCode));
     }

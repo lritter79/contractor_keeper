@@ -92,10 +92,10 @@ const WarrantyView = () => {
                 subTitle={`${warranty.location}`}
             />
             <div>
-            <Tabs defaultActiveKey="1">
+            <Tabs defaultActiveKey="1" type="card">
                 <TabPane tab="Warranty Details" key="1">
-                    <Descriptions title="" bordered column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}>
-                        <Descriptions.Item label="Description" span={3}>{`${warranty.descriptionOfProject}`}  </Descriptions.Item>
+                    <Descriptions title="" layout="vertical" bordered column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}>
+                        <Descriptions.Item label="Description" span={4}>{`${warranty.descriptionOfProject}`}  </Descriptions.Item>
                         <Descriptions.Item label="Days To Expiration">{`${warranty.dte}`}</Descriptions.Item>
                         <Descriptions.Item label="Status">{`${warranty.stateOfWarranty}`}</Descriptions.Item>
                     </Descriptions>

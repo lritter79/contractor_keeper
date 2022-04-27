@@ -4,17 +4,19 @@ import useLocalStorage from "../../customHooks/useLocalStorage";
 import checkIfWarrantyExpired from '../../eth/checkIfWarrantyExpired';
 import { getWarranty } from '../../eth/getWarranty'
 import executeWarrantyMethod from '../../eth/executeWarrantyMethod';
-import { Skeleton, Spin, Button } from 'antd';
+import { Skeleton, Spin, Button, PageHeader, Tabs, Descriptions } from 'antd';
 import { ethers } from "ethers";
 import warrantyAbi from '../../eth/warrantyAbi';
 
 
 const WarrantyView = () => {
+    const { TabPane } = Tabs;
 
     const [address, setAddress] = useLocalStorage("contractAddress", null)
     //const [address, setAddress] = useLocalStorage("contractAddress", null)
     const [warranty, setWarranty] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    
     //const [isExpired, setIsExpired] = useState(null)
 
     async function voidWarranty() {
@@ -84,24 +86,42 @@ const WarrantyView = () => {
             <Skeleton paragraph={{ rows: 9 }} />
         </>}
         {!isLoading && <>
+            <PageHeader
+                className="site-page-header"
+                title={`${warranty.projectName}`}
+                subTitle={`${warranty.location}`}
+            />
             <div>
-                <ul>
+            <Tabs defaultActiveKey="1">
+                <TabPane tab="Warranty Details" key="1">
+                    <Descriptions title="" bordered column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}>
+                        <Descriptions.Item label="Description" span={3}>{`${warranty.descriptionOfProject}`}  </Descriptions.Item>
+                        <Descriptions.Item label="Days To Expiration">{`${warranty.dte}`}</Descriptions.Item>
+                        <Descriptions.Item label="Status">{`${warranty.stateOfWarranty}`}</Descriptions.Item>
+                    </Descriptions>
+                </TabPane>
+                <TabPane tab="Holder Details" disabled={false} key="2">
+                </TabPane>
+                <TabPane tab="Provider Details" key="3">
+                </TabPane>
+            </Tabs>
+                {/* <ul>
                     <li key={1}>
-                        Project Name: {`${warranty.projectName}`}
+                     
                     </li>
                     <li key={2}>
-                        Description: {`${warranty.descriptionOfProject}`}                  
+                        Description:                 
                     </li>
                     <li key={3}>
                         Location: {`${warranty.location}`}
                     </li>
                     <li key={4}>
-                        Days to expiration: {`${warranty.dte}`}
+                        Days to expiration: 
                     </li>               
                     <li key={5}>
-                        Status: {`${warranty.stateOfWarranty}`}
+                        Status: 
                     </li>
-                </ul>
+                </ul> */}
                 <Button  onClick={() => {voidWarranty()}}>Void this warranty?</Button>
             </div>
         </>}

@@ -28,12 +28,17 @@ const WarrantyForm = () => {
       } = useStepsForm({
         async submit (values) {
         setIsModalVisible(true)
-          console.log(values);
-          let arr = shapeData(values);
-          let address = await deployWarranty(arr)
-          setAddress(address)
-          //await new Promise(r => setTimeout(r, 1000));
-          return 'ok';
+          try {
+            console.log(values);
+            let arr = shapeData(values);
+            let address = await deployWarranty(arr)
+            setAddress(address)
+            //await new Promise(r => setTimeout(r, 1000));
+            return 'ok';
+          } catch(err){
+            return err
+          }
+          
         },
         defaultCurrent:0, 
         isBackValidate:false, 
@@ -98,9 +103,12 @@ const WarrantyForm = () => {
                 setStatus(0)
               gotoStep(current + 1);
             }
+            else {
+                throw result
+            }
         })
         .catch(err => {
-            message.error("Something went wrong");
+            message.error(`Something went wrong:  ${err}`, 10);
             setStatus(1);
         })
         .finally(()=> setIsModalVisible(false));

@@ -12,11 +12,7 @@ import useLocalStorage from "../../customHooks/useLocalStorage";
 
 const WarrantyForm = () => {
     const { Step } = Steps;
-    const addressPlaceHolder = Object.freeze({
-        HOLDER_ADDRESS: '0x630aB4E818Bd0c1ADAF690aDC3703A49D6D7f07E',
-        PROVIDER_ADDRESS: '0x630aB4E818Bd0c1ADAF690aDC3703A49D6D7f07E',
-        TRANSFER_ADDRESS: '0x630aB4E818Bd0c1ADAF690aDC3703A49D6D7f07E'
-    });
+
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [address, setAddress] = useLocalStorage("contractAddress", null)
     const statusArr =['success', 'exception', 'active']
@@ -81,56 +77,6 @@ const WarrantyForm = () => {
             formOutput.useHolderAddress ? formOutput.holder.physicalLocation : formOutput.location,
         ];
 
-        let params2 =[
-            1648551148,      //uint _warrantyExpirationDate, //date in seconds past epoch
-            true, //_warrantyExpires
-            3,        //uint _numberOfDaysToCorrect,
-            1648501148,        //uint _workCompleted, //date in seconds past epoch
-            "Test",        //string memory _projectName,
-            "A test",        //string memory _description,
-            true,       //bool _transferable
-            {
-                name: "The Stine Family", 
-                partyAddress: addressPlaceHolder.PROVIDER_ADDRESS,
-                physicalLocation: {
-                    streetAddressLine1:'123 Fake Street',
-                streetAddressLine2:'',
-                city: 'PitBurgh',
-                state: 'PA',
-                postalCode: "77777"
-                },
-                contactInfo:{
-                    email: "fakeemail@gmail.com",
-                    phoneMobile: "4022931029",
-                    phoneHome:""
-        
-                } 
-            },      //Party memory _warrantyProvider,
-            {
-                name: "The Stine Contracting Co.", 
-                partyAddress: addressPlaceHolder.HOLDER_ADDRESS,
-                physicalLocation: {
-                    streetAddressLine1:'123 Fake Street',
-                streetAddressLine2:'',
-                city: 'PitBurgh',
-                state: 'PA',
-                postalCode: "77777"
-                },
-                contactInfo:{
-                    email: "fakeemail@gmail.com",
-                    phoneMobile: "4022931029",
-                    phoneHome:""
-        
-                } 
-            },        //Party memory _warrantyHolder,
-            {
-                streetAddressLine1:'123 Fake Street',
-                streetAddressLine2:'',
-                city: 'PitBurgh',
-                state: 'PA',
-                postalCode: "77777"
-            },        //Location memory _location
-        ]
         console.log(params);
         return params;
     }

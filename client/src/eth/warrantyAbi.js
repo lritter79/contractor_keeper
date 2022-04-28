@@ -44,7 +44,7 @@ const warrantyAbi = [
             "type": "string"
           },
           {
-            "internalType": "address",
+            "internalType": "address payable",
             "name": "partyAddress",
             "type": "address"
           },
@@ -115,7 +115,7 @@ const warrantyAbi = [
             "type": "string"
           },
           {
-            "internalType": "address",
+            "internalType": "address payable",
             "name": "partyAddress",
             "type": "address"
           },
@@ -225,7 +225,7 @@ const warrantyAbi = [
             "type": "string"
           },
           {
-            "internalType": "address",
+            "internalType": "address payable",
             "name": "partyAddress",
             "type": "address"
           },
@@ -303,7 +303,7 @@ const warrantyAbi = [
         "type": "string"
       }
     ],
-    "name": "WarrantyVoided",
+    "name": "WarrantyStateChanged",
     "type": "event"
   },
   {
@@ -453,7 +453,7 @@ const warrantyAbi = [
         "type": "string"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "partyAddress",
         "type": "address"
       },
@@ -525,7 +525,7 @@ const warrantyAbi = [
         "type": "string"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "partyAddress",
         "type": "address"
       },
@@ -601,8 +601,28 @@ const warrantyAbi = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountToEscrow",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositToEscrow",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "voidWarranty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "warrantyBreached",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -656,7 +676,7 @@ const warrantyAbi = [
             "type": "string"
           },
           {
-            "internalType": "address",
+            "internalType": "address payable",
             "name": "partyAddress",
             "type": "address"
           },
@@ -737,7 +757,7 @@ const warrantyAbi = [
             "type": "string"
           },
           {
-            "internalType": "address",
+            "internalType": "address payable",
             "name": "partyAddress",
             "type": "address"
           },
@@ -799,6 +819,19 @@ const warrantyAbi = [
         "internalType": "struct BaseWarrantySmartContract.Party[]",
         "name": "",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getEscrowBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

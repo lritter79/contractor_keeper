@@ -78,7 +78,7 @@ const WarrantyForm = () => {
             formOutput.isTransferable,
             formOutput.provider,
             formOutput.holder,
-            formOutput.useHolderAddress ? formOutput.holder.physicalLocation : formOutput.location
+            formOutput.useHolderAddress ? formOutput.holder.physicalLocation : formOutput.location,
         ];
 
         let params2 =[

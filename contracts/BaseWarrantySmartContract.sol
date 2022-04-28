@@ -10,7 +10,7 @@ contract BaseWarrantySmartContract {
     struct Party { 
         //a struct representing both the contractor and client
         string name; 
-        address partyAddress;
+        address payable partyAddress;
         Location physicalLocation;
         ContactInformation contactInfo;
     }
@@ -40,12 +40,12 @@ contract BaseWarrantySmartContract {
     uint public immutable numberOfDaysToCorrect;//•	Number of days contractor has to correct defective work before paying charges
     string public descriptionOfProject;
     uint256 public immutable warrantyStartDate;
-    enum WarrantyState { INACTIVE, ACTIVE, VOID }
+    enum WarrantyState { INACTIVE, ACTIVE, VOID, BREACHED }
     WarrantyState public stateOfWarranty;
     event CurrentHolderChanged(Party _newOwner);
-    event WarrantyVoided(string _message);
+    event WarrantyStateChanged(string _message);
 
-    constructor(uint _warrantyExpirationDate, //date in seconds past epoch
+    constructor (uint _warrantyExpirationDate, //date in seconds past epoch
                 bool _warrantyExpires,
                 uint _numberOfDaysToCorrect,
                 uint _workCompleted, //date in seconds past epoch
@@ -70,6 +70,12 @@ contract BaseWarrantySmartContract {
         isTransferable = _transferable;
     }
 
+    function depositToEscrow(uint256 amountToEscrow) public payable {
+        require(msg.value == amountToEscrow);
+
+    }
+
+
     modifier mustBeActive() {
         require(
             stateOfWarranty == WarrantyState.ACTIVE,
@@ -78,9 +84,32 @@ contract BaseWarrantySmartContract {
         _;
     }
 
+    modifier mustBeBreached() {
+        require(
+            stateOfWarranty == WarrantyState.BREACHED,
+            "This function may only be used if the contract is breached"
+        );
+        _;
+    }
+
+    modifier mustBeInactiveOrVoid() {
+        require(
+            (stateOfWarranty == WarrantyState.INACTIVE	|| stateOfWarranty == WarrantyState.VOID),
+            "This function may only be used if the contract is inactive or voided"
+        );
+        _;
+    }
+
     function voidWarranty() public mustBeActive {
         stateOfWarranty = WarrantyState.VOID;
-        emit WarrantyVoided(string(abi.encodePacked("The warranty for the ", projectName, " at ", getLocationAsString(), " has been voided")));
+        emit WarrantyStateChanged(string(abi.encodePacked("The warranty for the ", projectName, " at ", getLocationAsString(), " has been voided")));
+        contractorPayout();
+    }
+
+    function warrantyBreached() public mustBeActive {
+        stateOfWarranty = WarrantyState.BREACHED;
+        emit WarrantyStateChanged(string(abi.encodePacked("The warranty for the ", projectName, " at ", getLocationAsString(), " has been breached")));
+        holderPayout();
     }
 
     function checkIfExpired() public view returns(bool) {
@@ -153,4 +182,19 @@ contract BaseWarrantySmartContract {
         //require(msg.sender == warrantyProvider.partyAddress);//should require the by party's permission
         return previousHolders;
     }
+
+    //lets say as a way to discourage breach of warranty, the contractor puts some ETH into the contract
+    function getEscrowBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    //the only way the contractor can get it back is when the warranty expires or gets voided
+    function contractorPayout() private mustBeInactiveOrVoid {
+        warrantyProvider.partyAddress.transfer(address(this).balance);
+    }
+
+    //if the contractor breaches the warranty, then the balance goes to the warranty holder to make up for the damages
+    function holderPayout() private mustBeBreached {
+        warrantyHolder.partyAddress.transfer(address(this).balance);
+    }   
 }

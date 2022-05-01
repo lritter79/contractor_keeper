@@ -1,6 +1,5 @@
-import { web3 } from "./web3";
 
-export default async function executeWarrantyMethod(warranty, method, input) {
+export default async function executeWarrantyMethod(warranty, method, input, web3) {
     if (!warranty.methods[method]) return "No method"
     console.log(warranty.methods[method]())
     let gas = await warranty.methods[method]().estimateGas()

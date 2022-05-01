@@ -28,7 +28,7 @@ contract BaseWarrantySmartContract {
         string phoneMobile;
         string phoneHome;
     }
-    Party public warrantyHolder;    //the client
+    Party private warrantyHolder;    //the client
     Party public  warrantyProvider; //the contractor
     Party[] previousHolders;
     string public projectName;

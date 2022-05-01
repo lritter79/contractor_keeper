@@ -8,6 +8,7 @@ import WarrantyDetailsForm from "./Forms/WarrantyDetailsForm";
 import { useStepsForm } from 'sunflower-antd';
 import { deployWarranty } from "../../eth/warrantyDeploy";
 import useLocalStorage from "../../customHooks/useLocalStorage";
+import getWeb3 from "../../eth/web3";
 
 
 const WarrantyForm = () => {
@@ -31,7 +32,11 @@ const WarrantyForm = () => {
           try {
             console.log(values);
             let arr = shapeData(values);
-            let address = await deployWarranty(arr)
+            let web3 = await getWeb3()
+            if (!web3){
+                throw "No web3 provider found"
+            }
+            let address = await deployWarranty(arr, web3)
             setAddress(address)
             //await new Promise(r => setTimeout(r, 1000));
             return 'ok';

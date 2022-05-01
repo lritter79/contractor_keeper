@@ -1,9 +1,8 @@
-import { web3 } from "./web3";
 import { getWarranty } from "./getWarranty";
 import warrantyByteCode from "./warrantyByteCode";
 
-export async function deployWarranty(warrantyArguments) {
-    let warrantyContract = await getWarranty();
+export async function deployWarranty(warrantyArguments, web3) {
+    let warrantyContract = await getWarranty(null, web3);
     let gas = await warrantyContract.deploy({data:warrantyByteCode, arguments: warrantyArguments}).estimateGas((err, g) => console.log(g));
     let accounts = await web3.eth.getAccounts((err, accounts) => { return accounts} );
     if(!accounts[0]) {

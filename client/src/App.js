@@ -2,20 +2,28 @@ import React from "react";
 import { Layout, Menu } from 'antd';
 import Title from "antd/lib/typography/Title";
 import './App.css'
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import { Route, Link, Routes, useNavigate } from 'react-router-dom';
 import WarrantyForm from "./routes/WarrantyForm/WarrantyForm";
 import About from "./routes/About";
 import Carousel from "./components/Carousel";
 import Faq from "./routes/Faq";
 import WarrantyView from "./routes/WarrantyView/WarrantyView";
 import useLocalStorage from "../src/customHooks/useLocalStorage";
+import getWeb3 from "../src/eth/web3";
+
 const { Header, Content, Footer, Sider } = Layout;
+
 
 const App = () =>{
     const [address, setAddress] = useLocalStorage("contractAddress", null)
+    const navigate = useNavigate();
 
+    async function connect() {
+        if (await getWeb3()) await window.ethereum.request({method:"eth_requestAccounts"});
+        else navigate('/norpc');
+    }
     return (
-        <Router>
+        <>
             <Layout style={{minHeight:'100vh'}}>        
                 <Header mode="horizontal">
                     <Link to="/">
@@ -28,6 +36,9 @@ const App = () =>{
                         collapsedWidth="0"
                     >
                         <Menu mode="vertical">
+                            <Menu.Item key="connect">
+                                <p onClick={()=> connect()}>Connect To Web3 Provider</p>
+                            </Menu.Item>
                             <Menu.Item key="warranty">
                                 <Link to="/warranty">
                                     <img src="writing-sign.svg" className="menuIcon" alt=""></img>
@@ -58,7 +69,7 @@ const App = () =>{
                     <Layout>     
                         <Content style={{ padding: '0 50px', height:'100%' }}>
                             <Routes>
-                                <Route exact path="/" element={<Carousel/>}>
+                                <Route exact path="/" element={<div><Carousel/></div>}>
                                 </Route>   
                                 
                                 <Route exact path="/warranty" element={<WarrantyForm/>}>
@@ -72,6 +83,7 @@ const App = () =>{
 
                                 <Route exact path="/faq" element={<Faq/>}>
                                 </Route>
+                                <Route exact path="/norpc" element={<div><p>Uh oh you dont have a web3 RPC provider</p></div>}></Route>
 
                                 <Route path="*" element={
                                     <div>
@@ -81,12 +93,12 @@ const App = () =>{
                                 </Routes>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>
-                            Made With <span style={{color: 'rgb(255, 255, 255)'}}>❤</span> By Levon Ritter
+                            Made With <span style={{color: 'red'}}>❤</span> By Levon Ritter
                         </Footer>
                     </Layout>
                 </Layout>
             </Layout>
-        </Router>
+        </>
     )
 }
 

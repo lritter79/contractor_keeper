@@ -7,7 +7,7 @@ const Faqs = [
     a:'Contractor Keeper is a project by Levon Ritter, a Software Developer in Pittsburgh, PA' },
     {q:'How does it work?', 
     a:'CK is built in React. The Smart Contracts are written in Solidty, and compiled and tested with Truffle and Ganache. The front end interacts with the Web3 js library to interact with the block chain'},
-    {q:'How much is USD does it cost to create a contract?', a: 'A little less than $27'}
+    {q:'How much is USD does it cost to create a contract?', a: 'The gas costs can vary between transactions'}
 ]
 
 export default Faqs

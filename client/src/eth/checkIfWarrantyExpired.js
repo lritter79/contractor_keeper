@@ -1,6 +1,5 @@
-import { web3 } from "./web3";
 
-export default async function checkIfWarrantyExpired(warranty) {
+export default async function checkIfWarrantyExpired(warranty, web3) {
     let gas = await warranty.methods.checkIfExpired().estimateGas()
     console.log(gas)
     const accounts = await web3.eth.getAccounts();
